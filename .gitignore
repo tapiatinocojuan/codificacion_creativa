@@ -3,3 +3,6 @@
 *.gif
 *.pdf
 *.jpg
+codificacion_creativa_python/*
+rhino_scripts/*
+tutorial_py5/DATA/*
