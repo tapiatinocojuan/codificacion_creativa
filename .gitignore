@@ -6,3 +6,4 @@
 codificacion_creativa_python/*
 rhino_scripts/*
 tutorial_py5/DATA/*
+*__pycache__*
