@@ -7,3 +7,4 @@ codificacion_creativa_python/*
 rhino_scripts/*
 tutorial_py5/DATA/*
 *__pycache__*
+*.mp4

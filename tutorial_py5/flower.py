@@ -6,7 +6,11 @@ tapiatinocojuan@gmail.com
 Sketch para realizar la animacion de una flor.
 """
 import py5
-import py5_tools
+import sys
+from os import path
+sys.path.append(path.abspath(path.join(__file__, '../../src')))
+RUTA = path.abspath(path.join(__file__, '../DATA/animacion'))
+from utilidades import create_video, remove_png
 
 num_leaves = 20
 num_leaves_2 = 15
@@ -16,6 +20,7 @@ step_2 = py5.TAU/num_leaves_2
 i = 0
 j = 0
 k = 0
+fps = num_leaves
 
 def setup():
     py5.size(600, 600)
@@ -40,6 +45,7 @@ def draw():
             draw_circles(k, 8)
         py5.pop_matrix()
         k += 1
+        py5.save_frame(f"{RUTA}/{py5.frame_count:05d}.png")
         return
     if i == num_leaves:
         i = 0
@@ -53,6 +59,8 @@ def draw():
     py5.scale(i*step)
     draw_leaf(0, 200, 50, 50)
     py5.pop_matrix()
+
+    py5.save_frame(f"{RUTA}/{py5.frame_count:05d}.png")
 
 def draw_leaf(x0, w, bx, by):
     """Funcion que dibuja una hoja unica de la planta"""
@@ -75,5 +83,7 @@ def draw_circles(n, w):
         py5.circle(0,0,w)
         py5.pop_matrix()
 
-py5_tools.animated_gif('animated.gif', count=num_leaves_2+num_circles, period=1, duration=0.2)   
-py5.run_sketch()
+if __name__ == '__main__':
+    py5.run_sketch(block=True)
+    create_video(RUTA, fps, "my_video")
+    remove_png(RUTA)
