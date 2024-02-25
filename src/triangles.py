@@ -16,16 +16,18 @@ from create_letter import dibujar_letra
 
 j = 0; 
 max_r = None; min_r = None;
-num_triangulos = 1000; num_repeticiones = 50;
+num_triangulos = 500; num_repeticiones = 600;
 pts = []
 colores = utilidades.get_colors_4_colormap(py5.random_choice(colormap))
 fps = 60
 
 def setup():
-    global pts, min_r, max_r, num_repeticiones, fps
+    global pts, min_r, max_r, num_repeticiones, fps, colores
     py5.size(980, 980)
+    colores = utilidades.get_colors_4_colormap('RdPu')
     py5.background(0)
     py5.frame_rate(fps)
+    
     max_r = py5.width/50
     min_r = py5.width/500
     for _ in range(num_repeticiones):
@@ -35,6 +37,7 @@ def setup():
                 py5.random(min_r, max_r), 3, 0
             )
         )
+
 
 def draw():
     global j, num_repeticiones, num_triangulos, colores, pts
