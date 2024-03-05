@@ -41,7 +41,7 @@ concursos = (
    ('Rondallas', 'CULTURAL', "", ""),
    ('Bachirap', 'CULTURAL', "", ""),
    ('Cortometraje Amateur', 'CULTURAL', "", ""),
-   ('Señorita COBAEM 2024', 'CULTURAL', "", ""),
+   ('Señorita Cobaem 2024', 'CULTURAL', "", ""),
    ('Escoltas', 'CÍVICO', "", ""),
    ('Bandas de Guerra', 'CÍVICO', "", ""),
 )
@@ -87,7 +87,10 @@ def setup():
             py5.stroke(0)
             py5.text_align(py5.CENTER)
             if semestre:
-                py5.text(concurso, 2050, 1750)
+                if semestre.upper() == "SEGUNDO SEMESTRE":
+                    py5.text(concurso, 2050, 1730)
+                else:
+                    py5.text(concurso, 2050, 1710)
             else:
                 py5.text(concurso, 2050, 1650)
 
@@ -95,7 +98,7 @@ def setup():
                 semestre.title(), letra, 100, ancho_permitido=2800
             )
             #py5.text(semestre.title(), 2050, 1800)
-            py5.text(semestre.title(), 2050, 1500)
+            py5.text(semestre.title(), 2050, 1480)
             #if formato == 1:
             #    py5.end_record()
             #else:
