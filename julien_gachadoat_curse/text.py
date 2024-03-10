@@ -72,6 +72,12 @@ def draw():
             except:
                 print()
 
+    import freetype
+    font = freetype.Face(font_url)
+    font.set_char_size(400)
+    font.load_char("B")
+    import pdb;pdb.set_trace()
+
     py5.no_loop()
 
 if __name__ == "__main__":

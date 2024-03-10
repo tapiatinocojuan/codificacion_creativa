@@ -37,25 +37,48 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from freetype import *
 import numpy
 from matplotlib import pyplot as plt
+import py5
+
+def text_to_points(x0, y0, text, font, size, t, espaciado=0.1):
+    """Obtiene una serie de puntos del contorno del string en text"""
+    puntos = []
+    for letter in text:
+        verts, codes, width = get_verts_and_codes(font, letter, size)
+        pts = get_points(verts, codes, t, size)
+        xs, ys = zip(*pts)
+        x_min = min(xs)
+        x_max = max(xs)
+        y_min = min(ys)
+        puntos.extend([(x+x0, y+y0) for x, y in pts])
+        x0 = x0 + width + espaciado
+        print (width, x_max - x_min)
+    
+    return puntos
 
 
-def text_to_points(font, letter, size):
+
+def get_points(verts, codes, t, size):
+    i = 0
+    puntos = []
+    while (i < len(codes)):
+        code = codes[i]
+        if code == 2:
+            puntos.extend(linear_bezier(verts[i-1], verts[i], t, size))
+        elif code == 3:
+            puntos.extend(cuadratic_bezier(verts[i-1], verts[i], verts[i+1], t, size))
+            i += 1
+        i += 1
+    return puntos
+        
+def get_verts_and_codes(font, letter, size):
     face = Face(font)
     face.set_char_size( size )
     face.load_char(letter)
     slot = face.glyph
-
-    bitmap = face.glyph.bitmap
-    width  = face.glyph.bitmap.width
-    rows   = face.glyph.bitmap.rows
-    pitch  = face.glyph.bitmap.pitch
-
-    data = []
-    for i in range(rows):
-        data.extend(bitmap.buffer[i*pitch:i*pitch+width])
-    Z = numpy.array(data,dtype=numpy.ubyte).reshape(rows, width)
-
+    advance = face.get_advance(face.get_char_index(letter), face.face_flags)
     outline = slot.outline
+    bbox = outline.get_bbox()
+    width = bbox.xMax - bbox.xMin
     start, end = 0, 0
 
     VERTS, CODES = [], []
@@ -94,71 +117,82 @@ def text_to_points(font, letter, size):
         CODES.extend(codes)
         start = end+1
 
-    return VERTS, CODES
+    return VERTS, CODES, width
 
 
-def linear_bezier(p0, p1, num_puntos = 5):
+def calcular_segmento(points):
+    """Calcula el tamaño de un segmento a partir de la distancia entre sus puntos"""
+    distancia = 0
+    for i, point in enumerate(points[:-2]):
+        distancia += py5.dist(point[0], point[1], points[i+1][0], points[i+1][1])
+    return distancia
+
+def linear_bezier(p0, p1, step = 1, flag=1, size=100):
     """Calcula una curva berzier de grado 1 entre 2 puntos
     
     B(t) = P0 + t(P1 - P0) = (1-t) P0 + tP1 , 0 < t < 1
     """
-    step = 1/num_puntos
+    if flag:
+        st = 0.01
+    else:
+        if step < 0:
+            st = 0.000001
+        elif step > 1:
+            st = 1 
+        else:
+            st = step
     points = []
-    for i in range(num_puntos + 1):
-        t = step*i
+    t = 0
+    while (t < 1):
         x = (1-t)* p0[0] + t*p1[0]
-        y = (1-t)* p0[1] + t*p1[1]
+        y = -((1-t)* p0[1] + t*p1[1])
         points.append((x, y))
+        t += st
+    if flag:
+        distancia = calcular_segmento(points)
+        step = step*size/distancia
+        print (f"{distancia}, {step}, {1/step}")
+        points = linear_bezier(p0, p1, step, 0)
     
     return points
 
-def cuadratic_bezier(p0, p1, p2, num_puntos=5):
+def cuadratic_bezier(p0, p1, p2, step=1, flag=1, size=100):
     """Calcula una curva berzier de grado 2 entre 3 puntos
     
     B(t) = (1-t)**2P0 + 2(1-t)tP1 + t**2P2 , 0 < t < 1
     """
-    step = 1/num_puntos
+    if flag:
+        st = 0.01
+    else:
+        if step < 0:
+            st = 0.000001
+        elif step > 1:
+            st = 1 
+        else:
+            st = step
     points = []
-    for i in range(num_puntos + 1):
-        t = step*i
+    t = 0
+    while (t < 1):
         x = (1-t)**2*p0[0] + 2*(1-t)*t*p1[0] + t**2*p2[0]
-        y = (1-t)**2*p0[1] + 2*(1-t)*t*p1[1] + t**2*p2[1]
+        y = -((1-t)**2*p0[1] + 2*(1-t)*t*p1[1] + t**2*p2[1])
         points.append((x, y))
-    
+        t += st
+    if flag:
+        distancia = calcular_segmento(points)
+        step = step*size/distancia
+        print (f"{distancia}, {step}, {1/step}")
+        points = cuadratic_bezier(p0, p1,p2, step, 0)
+
     return points
 
 if __name__ == "__main__":
-    font_path = "DATA/Roboto-Regular.ttf"
-    letter = "B"
+    font_path = "DATA/GreatVibes-Regular.ttf"
+    letter = "A"
     size = 100
-    num_puntos = 5 #Num de puntos por seccion
-    verts, codes =text_to_points(font_path, letter, size)
-    x, y = zip(*verts)
-    plt.plot(x, y, "r:*")
-    curvas = (
-        (verts[2], verts[3], verts[4], num_puntos),
-        (verts[4], verts[5], verts[6], num_puntos),
-        (verts[6], verts[7], verts[8], num_puntos),
-        (verts[8], verts[9], verts[10], num_puntos),
-        (verts[10], verts[11], verts[12], num_puntos),
-        (verts[12], verts[13], verts[14], num_puntos),
-        (verts[14], verts[15], verts[16], num_puntos),
-        (verts[16], verts[17], verts[18], num_puntos),
-    )
-    for values in curvas:
-        puntos =  cuadratic_bezier(*values)
-        x, y = zip(*puntos)
-        plt.plot(x, y, "g:*")
-
-    lineas = (
-        (verts[0], verts[1], num_puntos),
-        (verts[1], verts[2], num_puntos),
-        (verts[18], verts[19], num_puntos),
-    )
-    for values in lineas:
-        puntos =  linear_bezier(*values)
-        x, y = zip(*puntos)
-        plt.plot(x, y, "g:*")
-
-
+    t = 0.1 
+    puntos = text_to_points(100, 100,letter,font_path,size, 0.05, 0)
+    x, y = zip(*puntos)
+    plt.plot(x, y, "g:*")
+    plt.grid()
     plt.show()
+
