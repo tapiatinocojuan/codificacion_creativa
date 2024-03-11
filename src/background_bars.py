@@ -76,8 +76,8 @@ class BackgroundBar():
 
 def setup():
     global img, step, num_bar, fps
-    py5.size(900,900)
-    img = py5.load_image('sandy.png')
+    py5.size(1600,798)
+    img = py5.load_image('cempasuchitl.png')
     step = py5.height/num_bar
     py5.frame_rate(fps)
     for i in range(num_bar):
@@ -100,5 +100,5 @@ def draw():
 
 if __name__ == '__main__':
     py5.run_sketch(block=True)
-    create_video(RUTA, fps, "barras")
+    create_video(RUTA, fps, "cempasuchitl")
     remove_png(RUTA)
