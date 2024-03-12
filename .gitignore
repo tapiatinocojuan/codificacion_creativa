@@ -10,3 +10,5 @@ tutorial_py5/DATA/*
 *.mp4
 *.ttf
 *.ipynb_checkpoints*
+*.otf
+*.psd
