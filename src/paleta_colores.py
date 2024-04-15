@@ -34,6 +34,12 @@ paleta_noche_estrellada = [
     (14/255,27/255,61/255, 0),
 ]
 
+lluvia = [
+    (23/255, 202/255, 241/255),
+    (176/255, 228/255, 240/255),
+    (225/255, 231/255, 232/255), 
+]
+
 colormap = [
         "autumn", 'viridis', 'plasma', 'inferno', 'magma', 'cividis',
         'Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
