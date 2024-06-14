@@ -5,7 +5,10 @@ tapiatinocojuan@gmail.com
 import py5
 from PIL import Image
 import numpy as np
-imagen_path = 'DATA/Frame-00029.png'
+from glob import glob
+
+imagenes = glob("DATA/animacion_sandy/*.jpg")
+imagen_path = imagenes[0]
 im = Image.open(imagen_path)
 #factor_escala = 0.035 #Imagenes grande
 factor_escala = 0.15
@@ -115,38 +118,45 @@ simbolos = [
 def setup():
     global img, pixeles, font
     py5.size(im.size[0], im.size[1])
-    img = py5.load_image(imagen_path)
-    img.apply_filter(py5.GRAY)
+    
     #img.apply_filter(py5.THRESHOLD, 0.9)
-    img.load_np_pixels()
-    pixels = img.np_pixels
-    font = py5.create_font(r"Huglove", 1)
-    pixeles = np.zeros((py5.width, py5.height))
-    for i, row in enumerate(pixels):
-        for j, cell in enumerate(row):
-            alpha, red, green, blue  = cell
-            lum = 0.2126*red/255 + 0.7152*green/255 + 0.0722*blue/255
-            lum = lum*alpha/255
-            pixeles[j][i] = (1-lum)
-    pixeles = promediar_matriz(pixeles, factor_escala)
+    
     #print()
 
 def draw():
     global img, pixeles, font
-    py5.begin_record(py5.SVG, "DATA/sandy_beso.svg")
-    py5.text_font(font)
     py5.scale(1/factor_escala)
-    py5.text_align(py5.CENTER)
-    for i, renglon in enumerate(pixeles):
-        for j, cell in enumerate(renglon):
-            py5.no_stroke()
-            py5.fill(0)
-            py5.text_align(py5.CENTER, py5.CENTER)
-            try:
-                py5.text(get_gliph(cell), i, j)
-            except:
-                import pdb; pdb.set_trace()
-    py5.end_record()
+    for imagen_path in imagenes:
+        print (imagen_path)
+        img = py5.load_image(imagen_path)
+        img.apply_filter(py5.GRAY)
+        img.load_np_pixels()
+        pixels = img.np_pixels
+        font = py5.create_font(r"Huglove", 1)
+        pixeles = np.zeros((py5.width, py5.height))
+        for i, row in enumerate(pixels):
+            for j, cell in enumerate(row):
+                alpha, red, green, blue  = cell
+                lum = 0.2126*red/255 + 0.7152*green/255 + 0.0722*blue/255
+                lum = lum*alpha/255
+                pixeles[j][i] = (1-lum)
+        pixeles = promediar_matriz(pixeles, factor_escala)
+
+        #py5.begin_record(py5.SVG, f"DATA/animacion_sandy/{py5.frame_count}.svg")
+        py5.background(255)
+        py5.text_font(font)
+        py5.text_align(py5.CENTER)
+        for i, renglon in enumerate(pixeles):
+            for j, cell in enumerate(renglon):
+                py5.no_stroke()
+                py5.fill(0)
+                py5.text_align(py5.CENTER, py5.CENTER)
+                try:
+                    py5.text(get_gliph(cell), i, j)
+                except:
+                    import pdb; pdb.set_trace()
+        #py5.end_record()
+        py5.save_frame(f"DATA/animacion_sandy/{path.basename(imagen_path)}.png")
     py5.no_loop()
 
 def get_gliph(valor):
