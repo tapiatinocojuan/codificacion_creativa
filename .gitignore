@@ -12,3 +12,4 @@ tutorial_py5/DATA/*
 *.ipynb_checkpoints*
 *.otf
 *.psd
+*.webp

@@ -174,5 +174,5 @@ class Particle():
 
 if __name__ == "__main__":
     py5.run_sketch(block=True)
-    create_video(RUTA, fps, "tt_explode")
-    remove_png(RUTA)
+    #create_video(RUTA, fps, "tt_explode")
+    #remove_png(RUTA)

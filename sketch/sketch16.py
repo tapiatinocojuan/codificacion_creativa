@@ -14,7 +14,7 @@ BACKGROUD_COLOR = "#000000"
 
 def setup():
     global s
-    py5.size(500, 500)
+    py5.size(1100, 1500)
     py5.background(BACKGROUD_COLOR)
     py5.begin_record(py5.SVG, "salida.svg")
     pintar()
@@ -23,7 +23,7 @@ def setup():
 def pintar():
     py5.random_seed(s)
     n = 2
-    nm = 30
+    nm = 50
     step_x = py5.width/n
     step_y = py5.height/n
     #color = [                       #CMYK
@@ -41,6 +41,10 @@ def pintar():
     color = [                         #Arcoiris
         ("#ff0000", "#ff9900"),
         ("#ffff00", "#00ff00"),
+    ]
+    color = [                         #Arcoiris
+        ("#000000", "#222222"),
+        ("#444444", "#666666"),
     ]
     for i in range(n):
         for j in range(n):
@@ -60,7 +64,8 @@ def megamozaico(w, h, x_off, y_off, bg_color, fill_color, n):
 
 
 def mozaico(w, h, x_off, y_off, bg_color, fill_color):
-    py5.fill(bg_color)
+    #py5.fill(bg_color)
+    py5.no_fill()
     py5.no_stroke()
     py5.begin_shape()
     py5.vertex(x_off + 0, y_off +0)
