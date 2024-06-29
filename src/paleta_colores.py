@@ -68,3 +68,76 @@ colormap_qualitative = [
 colormap3 = [
     "flag", "prism"
 ]
+
+
+colores_brillantes = [
+    "#ff0000", 
+    "#ff8700", 
+    "#ffd300", 
+    "#deff0a", 
+    "#a1ff0a", 
+    "#0aff99", 
+    "#0aefff", 
+    "#147df5", 
+    "#580aff", 
+    "#be0aff", 
+]
+
+colores_neon = [
+    "#04e762", 
+    "#f5b700", 
+    "#dc0073", 
+    "#deff0a", 
+    "#008bf8", 
+    "#89fc00", 
+]
+
+colores_rosados = [
+    "#ffcdb2", 
+    "#ffb4a2", 
+    "#e5989b", 
+    "#b5838d", 
+    "#6d6875",
+    "#F54952" 
+]
+
+colores_francia = [
+    "#E63946",
+    "#F1FAEE",
+    "#A8DADC",
+    "#457B9D", 
+    "#1D3557"
+]
+
+colores_rosa_amarillo = [
+    "#F47068",
+    "#FFB3AE",
+    "#FFF4F1",
+    "#1697A6", 
+    "#0E606B",
+    "#FFC24B"
+]
+
+colores_blanco_negro = [
+    "#FFFFFF",
+    "#000000",
+    "#FFFFFF",
+    "#000000",
+]
+
+colores_aleatorios_sandy = [
+    "#F21881",
+    "#F6F3C4",
+    "#000000",
+    "#2CBD04"
+]
+
+colores_purpura_rosa = [
+    "#422680",
+    "#341671",
+    "#280659",
+    "#660F56",
+    "#AE2D68",
+    "#F54952",
+
+]

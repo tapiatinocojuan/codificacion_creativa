@@ -5,10 +5,10 @@ tapiatinocojuan@gmail.com
 import py5
 from PIL import Image
 import numpy as np
-imagen_path = 'DATA/Frame-00029.png'
+imagen_path = 'DATA/templo.jpg'
 im = Image.open(imagen_path)
-#factor_escala = 0.035 #Imagenes grande
-factor_escala = 0.15
+factor_escala = 0.1 #Imagenes grande
+#factor_escala = 0.15
 import sys
 from os import path
 sys.path.append(path.abspath(path.join(__file__, '../../src')))
@@ -133,14 +133,15 @@ def setup():
 
 def draw():
     global img, pixeles, font
-    py5.begin_record(py5.SVG, "DATA/sandy_beso.svg")
+    py5.begin_record(py5.SVG, "DATA/templo.svg")
+    py5.background(0)
     py5.text_font(font)
     py5.scale(1/factor_escala)
     py5.text_align(py5.CENTER)
+    py5.no_stroke()
+    py5.fill("#3AD400")
     for i, renglon in enumerate(pixeles):
-        for j, cell in enumerate(renglon):
-            py5.no_stroke()
-            py5.fill(0)
+        for j, cell in enumerate(renglon):        
             py5.text_align(py5.CENTER, py5.CENTER)
             try:
                 py5.text(get_gliph(cell), i, j)
