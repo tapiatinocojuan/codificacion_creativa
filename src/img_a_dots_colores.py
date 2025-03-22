@@ -7,9 +7,9 @@ from PIL import Image
 import numpy as np
 import colorsys
 #imagen_path = 'DATA/hierbe_elagua.jpg'
-imagen_path = 'DATA/pollito.png'
+imagen_path = 'DATA/perezocita_sombras.png'
 im = Image.open(imagen_path)
-factor_escala = 0.3 #Imagenes grande
+factor_escala = 0.1 #Imagenes grande
 #factor_escala = 0.2
 import sys
 from os import path

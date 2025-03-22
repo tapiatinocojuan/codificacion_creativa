@@ -39,9 +39,9 @@ def draw():
         if f_min > 0.1:
             f_min -= 0.1
 
-    py5.save_frame(f"{RUTA}/{py5.frame_count:05d}.png")
-    if py5.frame_count > 90*ciclos:
-        py5.no_loop()
+    #py5.save_frame(f"{RUTA}/{py5.frame_count:05d}.png")
+    #if py5.frame_count > 90*ciclos:
+    #    py5.no_loop()
 
 if __name__ == "__main__":
     py5.run_sketch(block=True)

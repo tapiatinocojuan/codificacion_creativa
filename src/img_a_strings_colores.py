@@ -6,7 +6,7 @@ import py5
 from PIL import Image
 import numpy as np
 import colorsys
-imagen_path = 'DATA/hierbe_elagua.jpg'
+imagen_path = 'DATA/puerquito_sombras.png'
 im = Image.open(imagen_path)
 factor_escala = 0.1 #Imagenes grande
 #factor_escala = 0.2
@@ -168,14 +168,14 @@ def draw():
                 )
                 py5.stroke(int(r*255), int(g*255), int(b*255))
                 py5.fill(r*255, g*255, b*255)
-                py5.stroke_weight(cell*0.25)
+                py5.stroke_weight(py5.remap(cell, 0, 1, 0.15, 0.25))
                 py5.line(i, j, i-1, j+1)
-                py5.line(i, j, i-1, j)
+                #py5.line(i, j, i-1, j)
                 py5.line(i, j, i-1, j-1)
-                py5.line(i, j, i, j-1)
-                py5.line(i, j, i, j+1)
+                #py5.line(i, j, i, j-1)
+                #py5.line(i, j, i, j+1)
                 py5.line(i, j, i+1, j+1)
-                py5.line(i, j, i+1, j)
+                #py5.line(i, j, i+1, j)
                 py5.line(i, j, i+1, j-1)
             except:
                 import pdb; pdb.set_trace()

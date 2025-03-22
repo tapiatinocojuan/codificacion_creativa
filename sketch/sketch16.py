@@ -14,7 +14,7 @@ BACKGROUD_COLOR = "#000000"
 
 def setup():
     global s
-    py5.size(1100, 1500)
+    py5.size(500, 500)
     py5.background(BACKGROUD_COLOR)
     py5.begin_record(py5.SVG, "salida.svg")
     pintar()
@@ -23,7 +23,7 @@ def setup():
 def pintar():
     py5.random_seed(s)
     n = 2
-    nm = 50
+    nm = 20
     step_x = py5.width/n
     step_y = py5.height/n
     #color = [                       #CMYK

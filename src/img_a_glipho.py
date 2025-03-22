@@ -5,10 +5,10 @@ tapiatinocojuan@gmail.com
 import py5
 from PIL import Image
 import numpy as np
-imagen_path = 'DATA/templo.jpg'
+imagen_path = 'DATA/sandy.png'
 im = Image.open(imagen_path)
 factor_escala = 0.1 #Imagenes grande
-#factor_escala = 0.15
+factor_escala = 0.05
 import sys
 from os import path
 sys.path.append(path.abspath(path.join(__file__, '../../src')))
@@ -16,15 +16,15 @@ RUTA = path.abspath(path.join(__file__, '../DATA/animacion'))
 
 #tipo de letra hughlove
 simbolos = [
-        (46, 0.039562560308780956),
-        (39, 0.05435831457060148),
-        (44, 0.05467996140238019),
-        (45, 0.06046960437439692),
-        (96, 0.06239948536506915),
-        (58, 0.0784818269540045),
-        (95, 0.08009006111289803),
-        (43, 0.0874879382438083),
-        (59, 0.09456416854293985),
+        #(46, 0.039562560308780956),
+        #(39, 0.05435831457060148),
+        #(44, 0.05467996140238019),
+        #(45, 0.06046960437439692),
+        #(96, 0.06239948536506915),
+        #(58, 0.0784818269540045),
+        #(95, 0.08009006111289803),
+        #(43, 0.0874879382438083),
+        #(59, 0.09456416854293985),
         (61, 0.10324863300096493),
         (34, 0.1106465101318752),
         (42, 0.1157928594403345),
@@ -116,8 +116,7 @@ def setup():
     global img, pixeles, font
     py5.size(im.size[0], im.size[1])
     img = py5.load_image(imagen_path)
-    img.apply_filter(py5.GRAY)
-    #img.apply_filter(py5.THRESHOLD, 0.9)
+    #img.apply_filter(py5.GRAY)
     img.load_np_pixels()
     pixels = img.np_pixels
     font = py5.create_font(r"Huglove", 1)
@@ -127,19 +126,19 @@ def setup():
             alpha, red, green, blue  = cell
             lum = 0.2126*red/255 + 0.7152*green/255 + 0.0722*blue/255
             lum = lum*alpha/255
-            pixeles[j][i] = (1-lum)
+            pixeles[j][i] = lum
     pixeles = promediar_matriz(pixeles, factor_escala)
     #print()
 
 def draw():
     global img, pixeles, font
-    py5.begin_record(py5.SVG, "DATA/templo.svg")
+    py5.begin_record(py5.SVG, "DATA/sandy.svg")
     py5.background(0)
     py5.text_font(font)
     py5.scale(1/factor_escala)
     py5.text_align(py5.CENTER)
     py5.no_stroke()
-    py5.fill("#3AD400")
+    py5.fill("#FFFFFF")
     for i, renglon in enumerate(pixeles):
         for j, cell in enumerate(renglon):        
             py5.text_align(py5.CENTER, py5.CENTER)
